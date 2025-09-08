@@ -1,0 +1,92 @@
+{
+  "box1": {
+    "title": "Cloud Accounts",
+    "data": {
+      "labels": ["Not Connected", "Connected"],
+      "datasets": [
+        {
+          "data": [50, 50],
+          "backgroundColor": ["#DBEAFE", "#2563EB"]
+        }
+      ]
+    },
+    "centerText": { "top": "2", "bottom": "Total" },
+    "legends": [
+      { "color": "#2563EB", "label": "Connected (2)" },
+      { "color": "#DBEAFE", "label": "Not Connected (2)" }
+    ]
+  },
+  "box2": {
+    "title": "Cloud Accounts Risk Management",
+    "data": {
+      "labels": ["Passed", "Failed", "Warning", "Not Available"],
+      "datasets": [
+        {
+          "data": [7253, 1689, 681, 36],
+          "backgroundColor": ["#22C55E", "#EF4444", "#FACC15", "#9CA3AF"]
+        }
+      ]
+    },
+    "centerText": { "top": "9659", "bottom": "Total" },
+    "legends": [
+      { "color": "#EF4444", "label": "Failed (1689)" },
+      { "color": "#FACC15", "label": "Warning (681)" },
+      { "color": "#9CA3AF", "label": "Not Available (36)" },
+      { "color": "#22C55E", "label": "Passed (7253)" }
+    ]
+  },
+  "box3": {
+    "title": "Add Widget",
+    "description": "Personalise your dashboard by adding the following widget"
+  },
+  "box4": {
+    "title": "Top 5 Namespace Specific Alerts",
+    "description": "No Graph data available!"
+  },
+  "box5": {
+    "title": "Workload Alerts",
+    "description": "No Graph data available!"
+  },
+  "box6": {
+    "title": "Add Widget",
+    "description": "Personalise your dashboard by adding the following widget"
+  },
+  "riskChart": {
+    "title": "Image Risk Assessment",
+    "data": {
+      "labels": ["Passed", "Failed", "Warning", "Not Available"],
+      "datasets": [
+        {
+          "data": [7253, 1689, 681, 36],
+          "backgroundColor": ["#22C55E", "#EF4444", "#FACC15", "#9CA3AF"]
+        }
+      ]
+    },
+    "centerText": { "top": "9659", "bottom": "Total" },
+    "legends": [
+      { "color": "#EF4444", "label": "Critical (9)" },
+      { "color": "#FACC15", "label": "High (150)" },
+      { "color": "#9CA3AF", "label": "Low(0)" },
+      { "color": "#22C55E", "label": "Warning(50)" }
+    ]
+  },
+  "riskChart2": {
+    "title": "Image Security Issues",
+    "data": {
+      "labels": ["Passed", "Failed", "Warning", "Not Available"],
+      "datasets": [
+        {
+          "data": [7253, 1689, 681, 36],
+          "backgroundColor": ["#22C55E", "#EF4444", "#FACC15", "#9CA3AF"]
+        }
+      ]
+    },
+    "centerText": { "top": "9659", "bottom": "Total" },
+    "legends": [
+      { "color": "#EF4444", "label": "Critical (9)" },
+      { "color": "#FACC15", "label": "High (150)" },
+      { "color": "#9CA3AF", "label": "Low(0)" },
+      { "color": "#22C55E", "label": "Warning(50)" }
+    ]
+  }
+}
