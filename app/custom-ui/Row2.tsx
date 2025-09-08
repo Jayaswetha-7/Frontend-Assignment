@@ -15,7 +15,8 @@ import { PlusIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
 import { Checkbox } from "../../components/ui/checkbox"
 import Image from "next/image";
-import MyImage from "../custom-ui/image/upchart.png";
+import images from '../../public/upchart.png'
+
 
   const Row2 = ({ box4, box5, box6 }: any) => {
     return (
@@ -26,7 +27,7 @@ import MyImage from "../custom-ui/image/upchart.png";
                  <p className="font-semibold mb-2">{box4.title}</p>
                    <div className="flex flex-col justify-center items-center">
                    <Image
-                     src={MyImage}       
+                     src={images}      
                      alt="My Image"
                      width={100}        
                      height={100}       
@@ -39,7 +40,7 @@ import MyImage from "../custom-ui/image/upchart.png";
           <p className="font-semibold mb-2">{box5.title}</p>
              <div className="flex flex-col justify-center items-center">
                   <Image
-                     src={MyImage}       
+                     src={images}       
                      alt="My Image"
                      width={100}        
                      height={100}       
