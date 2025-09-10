@@ -8,7 +8,6 @@ import {
   Tooltip,
   Legend as ChartLegend,
   Chart,
-  ChartData,
 } from "chart.js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import {
