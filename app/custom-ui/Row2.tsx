@@ -17,8 +17,20 @@ import { Checkbox } from "../../components/ui/checkbox"
 import Image from "next/image";
 import images from '../../public/upchart.png'
 
+interface BoxProps {
+  title: string;
+  description: string;
+}
 
-  const Row2 = ({ box4, box5, box6 }: any) => {
+interface Row2Props {
+  box4: BoxProps;
+  box5: BoxProps;
+  box6: BoxProps;
+}
+
+
+
+const Row2: React.FC<Row2Props> = ({ box4, box5, box6 }) => {
     return (
       <div className="flex flex-col gap-4 mt-5 w-full">
           <p className='font-semibold text-black'>CWPP Dashboard</p>

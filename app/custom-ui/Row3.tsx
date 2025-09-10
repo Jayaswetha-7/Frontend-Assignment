@@ -16,7 +16,23 @@ import { PlusIcon } from "lucide-react";
 import { Checkbox } from "../../components/ui/checkbox"
 import { Progress } from "../../components/ui/progress"
 
-const Row3 = ({ riskChart, riskChart2 }: any) => {
+interface Legend {
+  color: string;
+  label: string;
+}
+
+interface RiskChart {
+  title: string;
+  legends: Legend[];
+}
+
+interface Row3Props {
+  riskChart: RiskChart;
+  riskChart2: RiskChart;
+}
+
+
+const Row3: React.FC<Row3Props> = ({ riskChart, riskChart2 }) => {
   const [progress, setProgress] = React.useState(13)
 
   React.useEffect(() => {
@@ -40,7 +56,7 @@ const Row3 = ({ riskChart, riskChart2 }: any) => {
                 gradient="linear-gradient(to right, #22c55e, #3b82f6, #eab308, #ef4444)"
                />
              <div className="grid grid-cols-2 gap-2 w-[80%]">
-                {riskChart.legends.map((legend: any, i: number) => (
+                {riskChart.legends.map((legend, i) => (
                   <div key={i} className="flex items-center gap-2">
                      <span className="w-4 h-4 rounded-md" style={{ backgroundColor: legend.color }}  ></span>
                      <span>{legend.label}</span>
@@ -61,7 +77,7 @@ const Row3 = ({ riskChart, riskChart2 }: any) => {
                  gradient="linear-gradient(to right, #7f1d1d, #ef4444, #b45309, #facc15, #9ca3af)"
               />
              <div className="grid grid-cols-2 gap-2 w-[80%]">
-                {riskChart2.legends.map((legend: any, i: number) => (
+                {riskChart2.legends.map((legend, i) => (
                   <div key={i} className="flex items-center gap-2">
                      <span className="w-4 h-4 rounded-md" style={{ backgroundColor: legend.color }}  ></span>
                      <span>{legend.label}</span>

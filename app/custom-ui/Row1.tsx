@@ -19,6 +19,30 @@ import { Checkbox } from "../../components/ui/checkbox"
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+interface Legend {
+  color: string;
+  label: string;
+}
+
+interface CenterText {
+  top: string;
+  bottom: string;
+}
+
+interface BoxProps {
+  title: string;
+  data: any; 
+  legends: Legend[];
+  centerText: CenterText;
+  description?: string;
+}
+
+interface Row1Props {
+  box1: BoxProps;
+  box2: BoxProps;
+  box3: BoxProps;
+}
+
 // Options (no legend)
 const options = {
   plugins: {
@@ -58,7 +82,7 @@ const optionsRiskChart = {
   },
 };
 
-const Row1 = ({ box1, box2, box3 }: any) => {
+const Row1: React.FC<Row1Props> = ({ box1, box2, box3 })=> {
   return (
     <div className="flex flex-col gap-4 mt-5 w-full">
       <p className='font-semibold text-black'>CSPM Executive Dashboard</p>
@@ -75,15 +99,14 @@ const Row1 = ({ box1, box2, box3 }: any) => {
             />
           </div>
           <div className="flex flex-col text-sm space-y-2">
-            {box1.legends.map((legend: any, i: number) => (
-              <div key={i} className="flex items-center gap-2">
-                <span
-                  className="w-4 h-4 rounded-md"
-                  style={{ backgroundColor: legend.color }}
-                ></span>
-                <span>{legend.label}</span>
-              </div>
-            ))}
+          {box1.legends.map((legend: Legend, i: number) => (
+             <div key={i} className="flex items-center gap-2">
+             <span
+              className="w-4 h-4 rounded-md"
+              style={{ backgroundColor: legend.color }} ></span>
+              <span>{legend.label}</span>
+             </div>
+           ))}
           </div>
         </div>
       </div>
