@@ -38,7 +38,7 @@ interface CenterText {
 
 interface BoxProps {
   title: string;
-  data: ChartData<"doughnut">;
+  data?: any; 
   legends: Legend[];
   centerText: CenterText;
   description?: string;
