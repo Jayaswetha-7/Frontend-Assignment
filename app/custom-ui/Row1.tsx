@@ -8,6 +8,8 @@ import {
   Tooltip,
   Legend as ChartLegend,
   Chart,
+  ChartData,  
+  ChartOptions 
 } from "chart.js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import {
@@ -37,7 +39,7 @@ interface CenterText {
 
 interface BoxProps {
   title: string;
-  data?: any; 
+  data?: ChartData<"doughnut">; 
   legends: Legend[];
   centerText: CenterText;
   description?: string;
@@ -46,11 +48,14 @@ interface BoxProps {
 interface Row1Props {
   box1: BoxProps;
   box2: BoxProps;
-  box3: BoxProps;
+  box3: {
+    title: string;
+    description: string;
+  };
 }
 
 // Options (no legend)
-const options = {
+const options: ChartOptions<"doughnut"> = {
   plugins: {
     legend: {
       display: false,
@@ -63,6 +68,7 @@ const centerTextPlugin = (textTop: string, textBottom: string) => ({
   id: "centerText",
   beforeDraw: (chart: Chart<"doughnut">) => {
     const { width, height, ctx } = chart;
+    if (!ctx) return;
     ctx.save();
 
     ctx.font = "bold 18px sans-serif";
@@ -79,7 +85,7 @@ const centerTextPlugin = (textTop: string, textBottom: string) => ({
 });
 
 // Risk chart rotated
-const optionsRiskChart = {
+const optionsRiskChart: ChartOptions<"doughnut"> = {
   rotation: -0.5 * Math.PI,
   plugins: {
     legend: {
@@ -98,14 +104,16 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
           <p className="font-semibold mb-2">{box1.title}</p>
           <div className="flex items-center w-full space-x-8">
             <div className="w-50 h-50">
-              <Doughnut
-                data={box1.data}
-                options={options}
-                plugins={[centerTextPlugin(box1.centerText.top, box1.centerText.bottom)]}
-              />
+              {box1.data && (
+                <Doughnut
+                  data={box1.data}
+                  options={options}
+                  plugins={[centerTextPlugin(box1.centerText.top, box1.centerText.bottom)]}
+                />
+              )}
             </div>
             <div className="flex flex-col text-sm space-y-2">
-              {box1.legends.map((legend: Legend, i: number) => (
+              {box1.legends.map((legend, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <span
                     className="w-4 h-4 rounded-md"
@@ -123,14 +131,16 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
           <p className="font-semibold mb-2">{box2.title}</p>
           <div className="flex items-center w-full space-x-8">
             <div className="w-50 h-50">
-              <Doughnut
-                data={box2.data}
-                options={optionsRiskChart}
-                plugins={[centerTextPlugin(box2.centerText.top, box2.centerText.bottom)]}
-              />
+              {box2.data && (
+                <Doughnut
+                  data={box2.data}
+                  options={optionsRiskChart}
+                  plugins={[centerTextPlugin(box2.centerText.top, box2.centerText.bottom)]}
+                />
+              )}
             </div>
             <div className="flex flex-col text-sm space-y-2">
-              {box2.legends.map((legend: Legend, i: number) => (
+              {box2.legends.map((legend, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <span
                     className="w-4 h-4 rounded-md"
