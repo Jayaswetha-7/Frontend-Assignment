@@ -98,11 +98,11 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
   return (
     <div className="flex flex-col gap-4 mt-5 w-full">
       <p className="font-semibold text-black">CSPM Executive Dashboard</p>
-      <div className="flex gap-4 w-full">
+      <div className="flex flex-col md:flex-row gap-4 w-full">
         {/* Chart 1 */}
-        <div className="bg-white rounded-lg w-1/3 p-4 flex flex-col shadow">
-          <p className="font-semibold mb-2">{box1.title}</p>
-          <div className="flex items-center w-full space-x-8">
+        <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow">
+          <p className="font-semibold mb-2 text-[1rem]">{box1.title}</p>
+          <div className="flex flex-col md:flex-row items-center w-full space-x-8">
             <div className="w-50 h-50">
               {box1.data && (
                 <Doughnut
@@ -127,9 +127,9 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
         </div>
 
         {/* Chart 2 */}
-        <div className="bg-white rounded-lg w-1/3 p-4 flex flex-col shadow">
+        <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow">
           <p className="font-semibold mb-2">{box2.title}</p>
-          <div className="flex items-center w-full space-x-8">
+          <div className="flex flex-col md:flex-row items-center w-full space-x-8">
             <div className="w-50 h-50">
               {box2.data && (
                 <Doughnut
@@ -154,7 +154,7 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
         </div>
 
         {/* Widget Box */}
-        <div className="bg-white rounded-lg w-1/3 p-4 flex flex-col shadow items-center justify-center">
+        <div className="bg-white p-5 rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow items-center justify-center">
           <Sheet>
             <SheetTrigger className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-100">
               <PlusIcon className="w-4 h-4" />
