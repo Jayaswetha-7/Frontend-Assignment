@@ -8,13 +8,11 @@ import dashboardData from "../custom-ui/data/datas.json";
 
 
 const Dashboard = () => {
-  const [widgets, setWidgets] = useState<Widget[]>([]);
-
- 
+  
   return (
     <div className='h-screen w-full' >
       
-        <Row1 {...dashboardData} widgets={widgets} setWidgets={setWidgets}/>
+        <Row1 {...dashboardData} />
         <Row2 {...dashboardData} />
         <Row3 {...dashboardData} />
     </div>
