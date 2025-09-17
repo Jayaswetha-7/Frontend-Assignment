@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,10 +8,9 @@ import {
   Tooltip,
   Legend as ChartLegend,
   Chart,
-  ChartData,  
-  ChartOptions 
+  ChartData,
+  ChartOptions,
 } from "chart.js";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import {
   Sheet,
   SheetContent,
@@ -39,7 +38,7 @@ interface CenterText {
 
 interface BoxProps {
   title: string;
-  data?: ChartData<"doughnut">; 
+  data?: ChartData<"doughnut">;
   legends: Legend[];
   centerText: CenterText;
   description?: string;
@@ -52,6 +51,13 @@ interface Row1Props {
     title: string;
     description: string;
   };
+  searchTerm?: string; 
+}
+
+interface Widget {
+  id: number;
+  title: string;
+  text: string;
 }
 
 // Options (no legend)
@@ -94,7 +100,33 @@ const optionsRiskChart: ChartOptions<"doughnut"> = {
   },
 };
 
-const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
+const Row1: React.FC<Row1Props> = ({ box1, box2, searchTerm }) => {
+  // 🔹 Only store NEW widgets (not box1 & box2 here)
+  const [widgets, setWidgets] = useState<Widget[]>([]);
+
+  const [newTitle, setNewTitle] = useState("");
+  const [newText, setNewText] = useState("");
+  const [selectedWidgets, setSelectedWidgets] = useState<number[]>([]);
+
+  const toggleWidget = (id: number) => {
+    setSelectedWidgets((prev) =>
+      prev.includes(id) ? prev.filter((w) => w !== id) : [...prev, id]
+    );
+  };
+
+  const addWidget = () => {
+    if (!newTitle.trim()) return;
+    const newWidget: Widget = {
+      id: widgets.length + 3, // start after box1=1, box2=2
+      title: newTitle,
+      text: newText || "No description",
+    };
+    setWidgets((prev) => [...prev, newWidget]);
+    setSelectedWidgets((prev) => [...prev, newWidget.id]); // auto select
+    setNewTitle("");
+    setNewText("");
+  };
+
   return (
     <div className="flex flex-col gap-4 mt-5 w-full">
       <p className="font-semibold text-black">CSPM Executive Dashboard</p>
@@ -108,7 +140,12 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
                 <Doughnut
                   data={box1.data}
                   options={options}
-                  plugins={[centerTextPlugin(box1.centerText.top, box1.centerText.bottom)]}
+                  plugins={[
+                    centerTextPlugin(
+                      box1.centerText.top,
+                      box1.centerText.bottom
+                    ),
+                  ]}
                 />
               )}
             </div>
@@ -124,18 +161,26 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
               ))}
             </div>
           </div>
+        
         </div>
 
         {/* Chart 2 */}
         <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow">
+        
           <p className="font-semibold mb-2">{box2.title}</p>
+      
           <div className="flex flex-col md:flex-row items-center w-full space-x-8">
             <div className="w-50 h-50">
               {box2.data && (
                 <Doughnut
                   data={box2.data}
                   options={optionsRiskChart}
-                  plugins={[centerTextPlugin(box2.centerText.top, box2.centerText.bottom)]}
+                  plugins={[
+                    centerTextPlugin(
+                      box2.centerText.top,
+                      box2.centerText.bottom
+                    ),
+                  ]}
                 />
               )}
             </div>
@@ -153,40 +198,68 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
           </div>
         </div>
 
-        {/* Widget Box */}
-        <div className="bg-white p-5 rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow items-center justify-center">
+        {/* Widget Manager */}
+        <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow items-center justify-center">
           <Sheet>
             <SheetTrigger className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-100">
               <PlusIcon className="w-4 h-4" />
-              Add Widget
+              Add Widgets
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>{box3.title}</SheetTitle>
+                <SheetTitle>Add Widgets</SheetTitle>
                 <SheetDescription className="p-3">
-                  {box3.description}
-                  <Tabs defaultValue="account" className="w-[400px]">
-                    <TabsList>
-                      <TabsTrigger value="account">CSPM</TabsTrigger>
-                      <TabsTrigger value="cwpp">CWPP</TabsTrigger>
-                      <TabsTrigger value="image">Image</TabsTrigger>
-                      <TabsTrigger value="ticket">Ticket</TabsTrigger>
-                    </TabsList>
-                    <TabsContent
-                      value="account"
-                      className="p-3 border border-gray-300 flex gap-3"
-                    >
-                      <Checkbox id="cspm-1" defaultChecked /> Widget 1
-                    </TabsContent>
-                    <TabsContent
-                      value="cwpp"
-                      className="p-3 border border-gray-300 flex gap-3"
-                    >
-                      <Checkbox id="cwpp-1" /> CWPP Widget
-                    </TabsContent>
-                    <TabsContent value="image">Image Widgets</TabsContent>
-                    <TabsContent value="ticket">Ticket Widgets</TabsContent>
-                  </Tabs>
+                  Select or add new widgets below.
+                  {/* Default (charts) */}
+                  <div className="flex flex-col gap-2 mt-4">
+                    <label className="flex items-center gap-2 text-blue-600">
+                      <Checkbox
+                        checked={true}
+                        disabled
+                      />
+                      <span>{box1.title}</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-blue-600">
+                      <Checkbox
+                        checked={true}
+                        disabled
+                      />
+                      <span>{box2.title}</span>
+                    </label>
+                  </div>
+
+                  {/* Dynamic widgets */}
+                  <div className="flex flex-col gap-2 mt-4">
+                    {widgets.map((w) => (
+                      <label
+                        key={w.id}
+                        className="flex items-center gap-2 text-blue-600"
+                      >
+                        <Checkbox
+                          checked={selectedWidgets.includes(w.id)}
+                          onCheckedChange={() => toggleWidget(w.id)}
+                        />
+                        <span>{w.title}</span>
+                      </label>
+                    ))}
+                  </div>
+
+                  {/* Add new widget */}
+                  <div className="mt-6 space-y-3">
+                    <input
+                      type="text"
+                      placeholder="Widget Title"
+                      value={newTitle}
+                      onChange={(e) => setNewTitle(e.target.value)}
+                      className="border border-gray-300 rounded-md w-full p-2"
+                    />
+                    <textarea
+                      placeholder="Widget Text"
+                      value={newText}
+                      onChange={(e) => setNewText(e.target.value)}
+                      className="border border-gray-300 rounded-md w-full p-2"
+                    />
+                  </div>
                 </SheetDescription>
               </SheetHeader>
               <SheetFooter>
@@ -197,7 +270,10 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
                     </button>
                   </SheetClose>
                   <SheetClose asChild>
-                    <button className="px-6 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-900">
+                    <button
+                      className="px-6 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-900"
+                      onClick={addWidget}
+                    >
                       Confirm
                     </button>
                   </SheetClose>
@@ -206,6 +282,21 @@ const Row1: React.FC<Row1Props> = ({ box1, box2, box3 }) => {
             </SheetContent>
           </Sheet>
         </div>
+      </div>
+
+      {/* Render only NEW widgets */}
+      <div className="flex flex-col md:flex-row gap-4 w-full mt-4">
+        {widgets
+          .filter((w) => selectedWidgets.includes(w.id))
+          .map((w) => (
+            <div
+              key={w.id}
+              className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow"
+            >
+              <p className="font-semibold mb-2">{w.title}</p>
+              <p className="text-sm text-gray-600">{w.text}</p>
+            </div>
+          ))}
       </div>
     </div>
   );

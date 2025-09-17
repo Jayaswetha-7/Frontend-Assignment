@@ -29,11 +29,12 @@ interface RiskChart {
 interface Row3Props {
   riskChart: RiskChart;
   riskChart2: RiskChart;
+  searchTerm?: string; 
 }
 
 const Row3: React.FC<Row3Props> = ({ riskChart, riskChart2 }) => {
   const [progress, setProgress] = React.useState(13);
-
+  
   React.useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500);
     return () => clearTimeout(timer);
@@ -45,7 +46,9 @@ const Row3: React.FC<Row3Props> = ({ riskChart, riskChart2 }) => {
 
       <div className="flex flex-col md:flex-row gap-4 w-full">
         {/* Chart 1 */}
-        <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow pb-[3%]">
+        
+        <div  className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow pb-[3%]">
+        
           <p className="font-semibold mb-2">{riskChart.title}</p>
           <div className="flex flex-col items-center w-full mt-4 gap-5">
             <p>

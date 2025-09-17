@@ -23,17 +23,20 @@ interface BoxProps {
 }
 
 interface Row2Props {
-  box4: BoxProps
-  box5: BoxProps
-  box6: BoxProps
+  box4: BoxProps;
+  box5: BoxProps;
+  box6: BoxProps;
+  searchTerm?: string; 
 }
 
 const Row2: React.FC<Row2Props> = ({ box4, box5, box6 }) => {
+
   return (
     <div className="flex flex-col gap-4 mt-5 w-full">
       <p className="font-semibold text-black">CWPP Dashboard</p>
       <div className="flex flex-col md:flex-row gap-4 w-full">
         {/* Box 4 */}
+       
         <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow">
           <p className="font-semibold mb-2">{box4.title}</p>
           <div className="flex flex-col justify-center items-center">
@@ -47,7 +50,7 @@ const Row2: React.FC<Row2Props> = ({ box4, box5, box6 }) => {
             <p>{box4.description}</p>
           </div>
         </div>
-
+      
         {/* Box 5 */}
         <div className="bg-white rounded-lg w-full md:w-1/3 p-4 flex flex-col shadow">
           <p className="font-semibold mb-2">{box5.title}</p>

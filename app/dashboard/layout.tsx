@@ -12,23 +12,26 @@ import {
   SheetClose,
 } from "../../components/ui/sheet";
 import { PlusIcon, RefreshCw, MoreVertical, Clock, ChevronDown } from "lucide-react";
-import React from "react";
+import React, { useState, cloneElement } from "react";
 import { Checkbox } from "../../components/ui/checkbox";
 
-export default function DashboardLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
+
   return (
     <html lang="en">
       <body>
         <div className="flex flex-col p-4 min-h-screen w-full">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div className="flex flex-col md:flex-row space-x-10 md:items-center md:justify-between">
             <p className="text-[1.1rem] font-bold">CNAPP Dashboard</p>
+            <input
+              type="text"
+              placeholder="Search widgets..."
+              className="md:w-[30%] w-full px-3 py-2 border rounded-md outline-none focus:ring focus:ring-blue-300"
+            />
 
             {/* Action buttons */}
-            <div className="flex flex-wrap gap-2 md:gap-3">
+            <div className="flex flex-wrap space-x-5">
+              
               <Sheet>
                 <SheetTrigger className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-100">
                   Add Widget
