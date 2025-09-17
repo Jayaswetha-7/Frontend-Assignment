@@ -51,7 +51,8 @@ interface Row1Props {
     title: string;
     description: string;
   };
-  searchTerm?: string; 
+  widgets: Widget[];
+  setWidgets: React.Dispatch<React.SetStateAction<Widget[]>>;
 }
 
 interface Widget {
@@ -100,7 +101,7 @@ const optionsRiskChart: ChartOptions<"doughnut"> = {
   },
 };
 
-const Row1: React.FC<Row1Props> = ({ box1, box2, searchTerm }) => {
+const Row1: React.FC<Row1Props> = ({ box1, box2}) => {
   // 🔹 Only store NEW widgets (not box1 & box2 here)
   const [widgets, setWidgets] = useState<Widget[]>([]);
 

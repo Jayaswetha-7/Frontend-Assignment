@@ -17,6 +17,24 @@ import { Checkbox } from "../../components/ui/checkbox";
 
 export default function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
 
+  const [widgets, setWidgets] = useState<{ id: number; title: string; description: string }[]>([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const addWidget = () => {
+    if (!title.trim()) return;
+    setWidgets((prev) => [
+      ...prev,
+      { id: Date.now(), title, description },
+    ]);
+    setTitle("");
+    setDescription("");
+  };
+
+  const removeWidget = (id: number) => {
+    setWidgets((prev) => prev.filter((w) => w.id !== id));
+  };
+  
   return (
     <html lang="en">
       <body>
@@ -32,7 +50,7 @@ export default function DashboardLayout({children,}: Readonly<{children: React.R
             {/* Action buttons */}
             <div className="flex flex-wrap space-x-5">
               
-              <Sheet>
+            <Sheet>
                 <SheetTrigger className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-100">
                   Add Widget
                   <PlusIcon className="w-4 h-4" />
@@ -40,25 +58,20 @@ export default function DashboardLayout({children,}: Readonly<{children: React.R
                 <SheetContent>
                   <SheetHeader>
                     <SheetTitle>Add Widget</SheetTitle>
-                    <SheetDescription className="p-3">
-                      Personalise your dashboard by adding the following widget
-                      <Tabs defaultValue="account" className="w-full md:w-[400px]">
-                        <TabsList className="flex flex-wrap">
-                          <TabsTrigger value="account">CSPM</TabsTrigger>
-                          <TabsTrigger value="cwpp">CWPP</TabsTrigger>
-                          <TabsTrigger value="image">Image</TabsTrigger>
-                          <TabsTrigger value="ticket">Ticket</TabsTrigger>
-                        </TabsList>
-                        <TabsContent
-                          value="account"
-                          className="p-3 border border-gray-300 flex gap-3"
-                        >
-                          <Checkbox id="cspm-1" defaultChecked /> Widget 1
-                        </TabsContent>
-                        <TabsContent value="cwpp">CWPP</TabsContent>
-                        <TabsContent value="image">Image</TabsContent>
-                        <TabsContent value="ticket">Ticket</TabsContent>
-                      </Tabs>
+                    <SheetDescription className="p-3 space-y-3">
+                      <input
+                        type="text"
+                        placeholder="Widget Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md outline-none focus:ring focus:ring-blue-300"
+                      />
+                      <textarea
+                        placeholder="Widget Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md outline-none focus:ring focus:ring-blue-300"
+                      />
                     </SheetDescription>
                   </SheetHeader>
                   <SheetFooter>
@@ -69,7 +82,10 @@ export default function DashboardLayout({children,}: Readonly<{children: React.R
                         </button>
                       </SheetClose>
                       <SheetClose asChild>
-                        <button className="px-6 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-900">
+                        <button
+                          onClick={addWidget}
+                          className="px-6 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-900"
+                        >
                           Confirm
                         </button>
                       </SheetClose>
