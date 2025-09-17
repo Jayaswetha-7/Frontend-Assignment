@@ -51,8 +51,6 @@ interface Row1Props {
     title: string;
     description: string;
   };
-  widgets: Widget[];
-  setWidgets: React.Dispatch<React.SetStateAction<Widget[]>>;
 }
 
 interface Widget {
